@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Accident Prediction Form</title>
+</head>
+<body style="font-family: 'Segoe UI', Arial, sans-serif; background: linear-gradient(135deg, #1a2a6c, #b21f1f, #fdbb2d); margin: 0; padding: 40px; min-height: 100vh; color: #333;">
+    <!-- Modal Popup -->
+    <div id="resultModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.7); z-index: 1000;">
+        <div style="position: relative; background: linear-gradient(to bottom, #ffffff, #f8f9fa); margin: 15% auto; padding: 30px; width: 90%; max-width: 500px; border-radius: 15px; text-align: center; box-shadow: 0 5px 15px rgba(0,0,0,0.3);">
+            <span id="closeModal" style="position: absolute; right: 20px; top: 10px; font-size: 28px; cursor: pointer; color: #666; transition: color 0.3s;">&times;</span>
+            <h3 style="margin-bottom: 25px; color: #2c3e50; font-size: 24px; border-bottom: 2px solid #3498db; padding-bottom: 10px;">Prediction Result</h3>
+            <div id="modalContent" style="margin-bottom: 25px; font-size: 20px; padding: 20px; border-radius: 8px;"></div>
+            <button onclick="closeModal()" style="background: #3498db; color: white; padding: 12px 30px; border: none; border-radius: 25px; cursor: pointer; font-size: 16px; transition: background 0.3s; box-shadow: 0 2px 5px rgba(0,0,0,0.2);">Close</button>
+        </div>
+    </div>
+
+    <h2 style="text-align: center; color: white; margin-bottom: 30px; font-size: 32px; text-shadow: 2px 2px 4px rgba(0,0,0,0.3);">Accident Prediction System</h2>
+    
+    <div style="max-width: 700px; margin: 0 auto; background: linear-gradient(to bottom, #ffffff, #f8f9fa); padding: 40px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.2);">    
+        <form id="accidentForm">
+            <div style="margin-bottom: 25px;">
+                <label for="location" style="display: block; margin-bottom: 10px; font-weight: 600; color: #2c3e50; font-size: 16px;">Mine Location:</label>
+                <select name="location" id="location" required style="width: 100%; padding: 12px; border: 2px solid #e0e0e0; border-radius: 8px; font-size: 16px; background-color: #f8f9fa; transition: border-color 0.3s;">
+                    <option value="#" disabled selected>Select the City</option>
+                    <option value="Bhatgaon">Bhatgaon</option>
+                    <option value="Bijuri">Bijuri</option>
+                    <option value="Dipka">Dipka</option>
+                    <option value="Gevra">Gevra</option>
+                    <option value="Korea">Korea</option>
+                    <option value="Kusmunda">Kusmunda</option>
+                </select>
+            </div>
+            
+            <div style="margin-bottom: 25px;">
+                <label for="dpm" style="display: block; margin-bottom: 10px; font-weight: 600; color: #2c3e50; font-size: 16px;">DPM Presence:</label>
+                <select name="dpm" id="dpm" required style="width: 100%; padding: 12px; border: 2px solid #e0e0e0; border-radius: 8px; font-size: 16px; background-color: #f8f9fa; transition: border-color 0.3s;">
+                    <option value="#" disabled selected>---Select----</option>
+                    <option value="Yes">Yes</option>
+                    <option value="No">No</option>
+                </select>
+            </div>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                <div style="margin-bottom: 25px;">
+                    <label for="sub_level" style="display: block; margin-bottom: 10px; font-weight: 600; color: #2c3e50; font-size: 16px;">Sub Level:</label>
+                    <input type="number" step="any" name="sub_level" id="sub_level" required style="width: 100%; padding: 12px; border: 2px solid #e0e0e0; border-radius: 8px; font-size: 16px; background-color: #f8f9fa; transition: border-color 0.3s; box-sizing: border-box;">
+                </div>
+                
+                <div style="margin-bottom: 25px;">
+                    <label for="supra_level" style="display: block; margin-bottom: 10px; font-weight: 600; color: #2c3e50; font-size: 16px;">Supra Level:</label>
+                    <input type="number" step="any" name="supra_level" id="supra_level" required style="width: 100%; padding: 12px; border: 2px solid #e0e0e0; border-radius: 8px; font-size: 16px; background-color: #f8f9fa; transition: border-color 0.3s; box-sizing: border-box;">
+                </div>
+            </div>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                <div style="margin-bottom: 25px;">
+                    <label for="particle_count" style="display: block; margin-bottom: 10px; font-weight: 600; color: #2c3e50; font-size: 16px;">Particle Count:</label>
+                    <input type="number" step="any" name="particle_count" id="particle_count" required style="width: 100%; padding: 12px; border: 2px solid #e0e0e0; border-radius: 8px; font-size: 16px; background-color: #f8f9fa; transition: border-color 0.3s; box-sizing: border-box;">
+                </div>
+                
+                <div style="margin-bottom: 25px;">
+                    <label for="analyzed_area" style="display: block; margin-bottom: 10px; font-weight: 600; color: #2c3e50; font-size: 16px;">Analyzed Area:</label>
+                    <input type="number" step="any" name="analyzed_area" id="analyzed_area" required style="width: 100%; padding: 12px; border: 2px solid #e0e0e0; border-radius: 8px; font-size: 16px; background-color: #f8f9fa; transition: border-color 0.3s; box-sizing: border-box;">
+                </div>
+            </div>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                <div style="margin-bottom: 25px;">
+                    <label for="loading_density" style="display: block; margin-bottom: 10px; font-weight: 600; color: #2c3e50; font-size: 16px;">Loading Density:</label>
+                    <input type="number" step="any" name="loading_density" id="loading_density" required style="width: 100%; padding: 12px; border: 2px solid #e0e0e0; border-radius: 8px; font-size: 16px; background-color: #f8f9fa; transition: border-color 0.3s; box-sizing: border-box;">
+                </div>
+                
+                <div style="margin-bottom: 25px;">
+                    <label for="abundance" style="display: block; margin-bottom: 10px; font-weight: 600; color: #2c3e50; font-size: 16px;">Abundance:</label>
+                    <input type="number" step="any" name="abundance" id="abundance" required style="width: 100%; padding: 12px; border: 2px solid #e0e0e0; border-radius: 8px; font-size: 16px; background-color: #f8f9fa; transition: border-color 0.3s; box-sizing: border-box;">
+                </div>
+            </div>
+
+            <div style="margin-top: 35px;">
+                <button type="submit" onclick="onClicked(event)" style="width: 100%; background: linear-gradient(135deg, #3498db, #2980b9); color: white; padding: 15px; border: none; border-radius: 8px; cursor: pointer; font-size: 18px; font-weight: 600; transition: transform 0.2s; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">Generate Prediction</button>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        // Function to show modal with result
+function showModal(result) {
+    const modal = document.getElementById('resultModal');
+    const modalContent = document.getElementById('modalContent');
+    
+    // Determine the background color based on prediction
+    let backgroundColor, textColor;
+    if (result.toLowerCase().includes('high')) {
+        backgroundColor = '#fee2e2'; // Light red
+        textColor = '#991b1b'; // Dark red
+    } else if (result.toLowerCase().includes('moderate')) {
+        backgroundColor = '#fef3c7'; // Light yellow
+        textColor = '#92400e'; // Dark orange
+    } else {
+        backgroundColor = '#dcfce7'; // Light green
+        textColor = '#166534'; // Dark green
+    }
+    
+    // Style the modal content
+    modalContent.style.backgroundColor = backgroundColor;
+    modalContent.style.color = textColor;
+    modalContent.innerHTML = `
+        <div style="font-size: 24px; margin-bottom: 15px;">
+            <strong>Risk Level</strong>
+        </div>
+        <div style="font-size: 20px;">
+            ${result}
+        </div>
+    `;
+    
+    // Show modal with animation
+    modal.style.display = 'block';
+    setTimeout(() => {
+        modal.style.opacity = '1';
+    }, 10);
+}
+
+// Function to close modal
+function closeModal() {
+    const modal = document.getElementById('resultModal');
+    modal.style.opacity = '0';
+    setTimeout(() => {
+        modal.style.display = 'none';
+    }, 300);
+}
+
+// Close modal when clicking outside
+window.onclick = function(event) {
+    const modal = document.getElementById('resultModal');
+    if (event.target === modal) {
+        closeModal();
+    }
+}
+
+// Form submission handler
+async function onClicked(event) {
+    event.preventDefault();
+    
+    // Show loading state
+    const submitButton = event.target;
+    const originalText = submitButton.innerHTML;
+    submitButton.innerHTML = `
+        <span style="display: inline-block; animation: spin 1s linear infinite;">⚡</span> 
+        Processing...
+    `;
+    submitButton.disabled = true;
+
+    try {
+        const form = document.getElementById('accidentForm');
+        const formData = new FormData(form);
+
+        const response = await fetch('/predict', {
+            method: 'POST',
+            body: formData
+        });
+
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+
+        const result = await response.text();
+        showModal(result);
+    } catch (error) {
+        showModal('Error: Unable to generate prediction. Please try again.');
+    } finally {
+        // Restore button state
+        submitButton.innerHTML = originalText;
+        submitButton.disabled = false;
+    }
+}
+
+// Add custom CSS for animations
+const style = document.createElement('style');
+style.textContent = `
+    @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+    }
+    
+    #resultModal {
+        opacity: 0;
+        transition: opacity 0.3s ease-in-out;
+    }
+    
+    .modal-content {
+        transform: scale(0.7);
+        transition: transform 0.3s ease-in-out;
+    }
+    
+    #resultModal.show .modal-content {
+        transform: scale(1);
+    }
+`;
+document.head.appendChild(style);
+    </script>
+</body>
+</html>
